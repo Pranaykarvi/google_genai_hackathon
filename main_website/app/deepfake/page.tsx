@@ -57,7 +57,7 @@ export default function DeepfakeDetection() {
     formData.append("files", file) // key must match backend expecting "files"
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/detect/", {
+      const response = await fetch("https://falsify-backend.onrender.com/detect/", {
         method: "POST",
         body: formData,
       })
