@@ -1,10 +1,19 @@
-import { UserButton } from "@clerk/nextjs"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, Eye, Globe, FileText, ArrowRight } from "lucide-react"
-import Link from "next/link"
+"use client";
+
+import { useEffect, useState } from "react";
+import { UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, Eye, Globe, FileText, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Dashboard() {
+  // Optional: mount guard to avoid hydration errors
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -14,7 +23,8 @@ export default function Dashboard() {
             <Shield className="h-8 w-8 text-primary" />
             <h1 className="text-2xl font-bold">Falsify</h1>
           </div>
-          <UserButton afterSignOutUrl="/" />
+          {/* Render UserButton only after mount to avoid hydration mismatch */}
+          {mounted ? <UserButton afterSignOutUrl="/" /> : null}
         </div>
       </header>
 
@@ -95,5 +105,5 @@ export default function Dashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }
